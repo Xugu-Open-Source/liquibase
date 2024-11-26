@@ -2,7 +2,18 @@ package liquibase.sqlgenerator.core;
 
 import liquibase.Scope;
 import liquibase.database.Database;
-import liquibase.database.core.*;
+import liquibase.database.core.AbstractDb2Database;
+import liquibase.database.core.CAEDatabase;
+import liquibase.database.core.Db2zDatabase;
+import liquibase.database.core.InformixDatabase;
+import liquibase.database.core.MSSQLDatabase;
+import liquibase.database.core.MySQLDatabase;
+import liquibase.database.core.OracleDatabase;
+import liquibase.database.core.PostgresDatabase;
+import liquibase.database.core.SQLiteDatabase;
+import liquibase.database.core.SybaseASADatabase;
+import liquibase.database.core.SybaseDatabase;
+import liquibase.database.core.XuguDatabase;
 import liquibase.datatype.DatabaseDataType;
 import liquibase.exception.DatabaseException;
 import liquibase.exception.ValidationErrors;
@@ -14,7 +25,6 @@ import liquibase.statement.DatabaseFunction;
 import liquibase.statement.ForeignKeyConstraint;
 import liquibase.statement.NotNullConstraint;
 import liquibase.statement.UniqueConstraint;
-import liquibase.statement.*;
 import liquibase.statement.core.CreateTableStatement;
 import liquibase.structure.core.ForeignKey;
 import liquibase.structure.core.Relation;
@@ -197,7 +207,7 @@ public class CreateTableGenerator extends AbstractSqlGenerator<CreateTableStatem
             if ((database instanceof MySQLDatabase) && (statement.getColumnRemarks(column) != null)) {
                 buffer.append(" COMMENT '" + database.escapeStringForDatabase(statement.getColumnRemarks(column)) + "'");
             }
-            if ((database instanceof XuguDatabase) && (statement.getColumnRemarks(column) != null)) {
+            if (((database instanceof XuguDatabase) ||(database instanceof CAEDatabase)) && (statement.getColumnRemarks(column) != null)) {
                 buffer.append(" COMMENT '")
                         .append(database.escapeStringForDatabase(statement.getColumnRemarks(column)))
                         .append("'");

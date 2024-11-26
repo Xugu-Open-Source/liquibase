@@ -102,7 +102,8 @@ public class ModifyDataTypeGenerator extends AbstractSqlGenerator<ModifyDataType
                 || (database instanceof H2Database)
                 || (database instanceof OracleDatabase)
                 || (database instanceof InformixDatabase)
-                || (database instanceof XuguDatabase)) {
+                || (database instanceof XuguDatabase)
+                || (database instanceof CAEDatabase)) {
             return " ";
         }else {
             return " TYPE ";

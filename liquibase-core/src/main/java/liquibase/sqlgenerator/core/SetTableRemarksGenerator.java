@@ -22,6 +22,7 @@ public class SetTableRemarksGenerator extends AbstractSqlGenerator<SetTableRemar
 				|| (database instanceof MSSQLDatabase)
 				|| (database instanceof H2Database)
 				|| (database instanceof SybaseASADatabase)
+				|| (database instanceof CAEDatabase)
 				|| (database instanceof XuguDatabase);
 	}
 

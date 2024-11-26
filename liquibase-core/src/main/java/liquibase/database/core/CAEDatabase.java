@@ -22,23 +22,23 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class XuguDatabase extends AbstractJdbcDatabase {
+public class CAEDatabase extends AbstractJdbcDatabase {
 
 
-    public static final String PRODUCT_NAME = "XuguDB";
+    public static final String PRODUCT_NAME = "CAEDB SQL Server";
     private static final Set<String> RESERVED_WORDS = createReservedWords();
 
     /** Pattern used to extract function precision like 3 in CURRENT_TIMESTAMP(3) */
     private static final String  PRECISION_REGEX = "\\(\\d+\\)";
     public static final Pattern PRECISION_PATTERN = Pattern.compile(PRECISION_REGEX);
 
-    public XuguDatabase() {
+    public CAEDatabase() {
         super.setCurrentDateTimeFunction("NOW()");
     }
 
     @Override
     public String getShortName() {
-        return "xugu";
+        return "cae";
     }
 
     @Override
@@ -58,7 +58,7 @@ public class XuguDatabase extends AbstractJdbcDatabase {
     }
     @Override
     protected String getDefaultDatabaseProductName() {
-        return "XuguDB";
+        return PRODUCT_NAME;
     }
 
     @Override
@@ -79,8 +79,8 @@ public class XuguDatabase extends AbstractJdbcDatabase {
     @Override
     public String getDefaultDriver(String url) {
         //noinspection HardCodedStringLiteral
-        if (url.startsWith("jdbc:xugu")) {
-            return "com.xugu.cloudjdbc.Driver";
+        if (url.startsWith("jdbc:cae")) {
+            return "com.cae.cloudjdbc.Driver";
         }
         return null;
     }

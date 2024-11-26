@@ -1004,7 +1004,7 @@ public class JdbcDatabaseSnapshot extends DatabaseSnapshot {
                         return queryDb2Zos(catalogAndSchema, table);
                     } else if ( database instanceof PostgresDatabase) {
                         return queryPostgres(catalogAndSchema, table);
-                    }else if (database instanceof XuguDatabase) {
+                    }else if ((database instanceof XuguDatabase) || (database instanceof CAEDatabase)) {
                         return queryXuGu(catalogAndSchema, table);
                     }
 
@@ -1664,6 +1664,18 @@ public class JdbcDatabaseSnapshot extends DatabaseSnapshot {
                                 "and sysconstraint.constraint_type = 'U'";
                         if (tableName != null) {
                             sql += " and systable.table_name = '" + tableName + "'";
+                        }
+                    } else if ((database instanceof XuguDatabase) || (database instanceof CAEDatabase)) {
+                        sql = "SELECT c.cons_name as CONSTRAINT_NAME, c.cons_type as CONSTRAINT_TYPE, t.table_name " +
+                                "FROM user_constraints c " +
+                                "LEFT JOIN all_tables  t ON c.table_id = t.table_id " +
+                                "LEFT JOIN user_databases d ON c.db_id = d.db_id " +
+                                "LEFT JOIN user_schemas s ON t.schema_id = s.schema_id " +
+                                "WHERE s.schema_name = '" + jdbcSchemaName + "' " +
+                                "AND d.db_name = '" + jdbcCatalogName + "' " +
+                                "AND c.cons_type = 'U'";
+                        if (tableName != null) {
+                            sql += " and t.table_name='" + tableName + "'";
                         }
                     } else {
                         sql = "select CONSTRAINT_NAME, CONSTRAINT_TYPE, TABLE_NAME "
