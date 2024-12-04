@@ -50,9 +50,6 @@ public class CAEDatabase extends AbstractJdbcDatabase {
             if (name == null) {
                 return null;
             }
-            if (!this.isCaseSensitive()) {
-                return name.toLowerCase(Locale.US);
-            }
             return name;
         }
     }
