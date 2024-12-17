@@ -27,6 +27,7 @@ public class SetColumnRemarksGenerator extends AbstractSqlGenerator<SetColumnRem
                 || (database instanceof H2Database)
                 || (database instanceof SybaseASADatabase)
                 || (database instanceof MySQLDatabase)
+                || (database instanceof CAEDatabase)
                 || (database instanceof XuguDatabase);
     }
 

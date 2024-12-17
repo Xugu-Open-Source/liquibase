@@ -71,6 +71,8 @@ liquibase.sqlgenerator.core.InsertOrUpdateGeneratorH2
 liquibase.sqlgenerator.core.InsertOrUpdateGeneratorHsql
 liquibase.sqlgenerator.core.InsertOrUpdateGeneratorInformix
 liquibase.sqlgenerator.core.InsertOrUpdateGeneratorMSSQL
+liquibase.sqlgenerator.core.InsertOrUpdateGeneratorCAE
+liquibase.sqlgenerator.core.InsertOrUpdateGeneratorXuGu
 liquibase.sqlgenerator.core.InsertOrUpdateGeneratorMySQL
 liquibase.sqlgenerator.core.InsertOrUpdateGeneratorOracle
 liquibase.sqlgenerator.core.InsertOrUpdateGeneratorPostgres

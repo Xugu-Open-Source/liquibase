@@ -1,15 +1,12 @@
 package liquibase.database.core;
 
 import liquibase.CatalogAndSchema;
-import liquibase.Scope;
 import liquibase.database.AbstractJdbcDatabase;
 import liquibase.database.DatabaseConnection;
 import liquibase.exception.DatabaseException;
-import liquibase.executor.ExecutorService;
 import liquibase.statement.DatabaseFunction;
 import liquibase.statement.SqlStatement;
 import liquibase.statement.core.RawCallStatement;
-import liquibase.statement.core.RawSqlStatement;
 import liquibase.structure.DatabaseObject;
 import liquibase.structure.core.Index;
 import liquibase.structure.core.PrimaryKey;
@@ -21,23 +18,23 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class XuguDatabase extends AbstractJdbcDatabase {
+public class CAEDatabase extends AbstractJdbcDatabase {
 
 
-    public static final String PRODUCT_NAME = "XuguDB";
+    public static final String PRODUCT_NAME = "CAEDB SQL Server";
     private static final Set<String> RESERVED_WORDS = createReservedWords();
 
     /** Pattern used to extract function precision like 3 in CURRENT_TIMESTAMP(3) */
     private static final String  PRECISION_REGEX = "\\(\\d+\\)";
     public static final Pattern PRECISION_PATTERN = Pattern.compile(PRECISION_REGEX);
 
-    public XuguDatabase() {
+    public CAEDatabase() {
         super.setCurrentDateTimeFunction("NOW()");
     }
 
     @Override
     public String getShortName() {
-        return "xugu";
+        return "cae";
     }
 
     @Override
@@ -54,7 +51,7 @@ public class XuguDatabase extends AbstractJdbcDatabase {
     }
     @Override
     protected String getDefaultDatabaseProductName() {
-        return "XuguDB";
+        return "CAEDB SQL Server";
     }
 
     @Override
@@ -75,8 +72,8 @@ public class XuguDatabase extends AbstractJdbcDatabase {
     @Override
     public String getDefaultDriver(String url) {
         //noinspection HardCodedStringLiteral
-        if (url.startsWith("jdbc:xugu")) {
-            return "com.xugu.cloudjdbc.Driver";
+        if (url.startsWith("jdbc:cae")) {
+            return "com.cae.cloudjdbc.Driver";
         }
         return null;
     }
@@ -150,23 +147,6 @@ public class XuguDatabase extends AbstractJdbcDatabase {
     }
 
     @Override
-    public boolean supportsForeignKeyDisable() {
-        return true;
-    }
-
-    @Override
-    public boolean disableForeignKeyChecks() throws DatabaseException {
-        boolean enabled = Scope.getCurrentScope().getSingleton(ExecutorService.class).getExecutor("jdbc", this).queryForInt(new RawSqlStatement("SELECT @@FOREIGN_KEY_CHECKS")) == 1;
-        Scope.getCurrentScope().getSingleton(ExecutorService.class).getExecutor("jdbc", this).execute(new RawSqlStatement("SET FOREIGN_KEY_CHECKS=0"));
-        return enabled;
-    }
-
-    @Override
-    public void enableForeignKeyChecks() throws DatabaseException {
-        Scope.getCurrentScope().getSingleton(ExecutorService.class).getExecutor("jdbc", this).execute(new RawSqlStatement("SET FOREIGN_KEY_CHECKS=1"));
-    }
-
-    @Override
     public CatalogAndSchema getSchemaFromJdbcInfo(String rawCatalogName, String rawSchemaName) {
         return new CatalogAndSchema(rawCatalogName, null).customize(this);
     }
@@ -221,6 +201,7 @@ public class XuguDatabase extends AbstractJdbcDatabase {
 
     /*
      * list from https://help.xugudb.com/documents/sql-syntax-reference-guide/keywords-L
+     * SELECT * FROM SYS_KEYWORDS;
      */
     private static Set<String> createReservedWords() {
         return new HashSet<>(Arrays.asList("ABORT",

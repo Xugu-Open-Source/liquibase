@@ -98,6 +98,18 @@ public class MarkChangeSetRanExecuteTest extends AbstractExecuteTest {
                         "'8:d41d8cd98f00b204e9800998ecf8427e', 'empty', '', 'executed', 'e', null, '" + version + "'," +
                         " null)",
                 Ingres9Database.class);
+        assertCorrect("insert into databasechangelog (id, author, filename, dateexecuted, " +
+                        "orderexecuted, md5sum, description, comments, exectype, contexts, labels, liquibase, deployment_id) " +
+                        "values ('a', 'b', 'c', " +
+                        "now(), 1, '8:d41d8cd98f00b204e9800998ecf8427e', 'empty', '', 'executed', 'e', null, " +
+                        "'" + version + "', null)",
+                XuguDatabase.class);
+        assertCorrect("insert into databasechangelog (id, author, filename, dateexecuted, " +
+                        "orderexecuted, md5sum, description, comments, exectype, contexts, labels, liquibase, deployment_id) " +
+                        "values ('a', 'b', 'c', " +
+                        "now(), 1, '8:d41d8cd98f00b204e9800998ecf8427e', 'empty', '', 'executed', 'e', null, " +
+                        "'" + version + "', null)",
+                CAEDatabase.class);
         assertCorrectOnRest("insert into databasechangelog (id, author, filename, dateexecuted, " +
                 "orderexecuted, md5sum, description, comments, exectype, contexts, labels, liquibase, deployment_id) " +
                 "values ('a', 'b', 'c', " +

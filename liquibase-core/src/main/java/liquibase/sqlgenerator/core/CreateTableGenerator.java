@@ -203,13 +203,8 @@ public class CreateTableGenerator extends AbstractSqlGenerator<CreateTableStatem
                 } // Do we need to specify NULL explicitly?
             } // Do we have a NOT NULL constraint for this column?
 
-            if ((database instanceof MySQLDatabase) && (statement.getColumnRemarks(column) != null)) {
+            if (((database instanceof MySQLDatabase) || (database instanceof XuguDatabase) || (database instanceof CAEDatabase)) && (statement.getColumnRemarks(column) != null)) {
                 buffer.append(" COMMENT '" + database.escapeStringForDatabase(statement.getColumnRemarks(column)) + "'");
-            }
-            if ((database instanceof XuguDatabase) && (statement.getColumnRemarks(column) != null)) {
-                buffer.append(" COMMENT '")
-                        .append(database.escapeStringForDatabase(statement.getColumnRemarks(column)))
-                        .append("'");
             }
 
             if (columnIterator.hasNext()) {
@@ -375,8 +370,11 @@ public class CreateTableGenerator extends AbstractSqlGenerator<CreateTableStatem
             }
         }
 
-        if ((database instanceof XuguDatabase) && (statement.getRemarks() != null)) {
+        if (((database instanceof XuguDatabase) || (database instanceof CAEDatabase)) && (statement.getRemarks() != null)) {
             sql += " COMMENT '" + database.escapeStringForDatabase(statement.getRemarks()) + "' ";
+        }
+        if ((database instanceof MySQLDatabase) && (statement.getRemarks() != null)) {
+            sql += " COMMENT='" + database.escapeStringForDatabase(statement.getRemarks()) + "' ";
         }
         additionalSql.add(0, new UnparsedSql(sql, getAffectedTable(statement)));
         return additionalSql.toArray(new Sql[additionalSql.size()]);

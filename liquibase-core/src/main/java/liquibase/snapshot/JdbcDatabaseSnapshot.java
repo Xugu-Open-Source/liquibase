@@ -1025,7 +1025,7 @@ public class JdbcDatabaseSnapshot extends DatabaseSnapshot {
                         return queryDb2Zos(catalogAndSchema, table);
                     } else if (database instanceof PostgresDatabase) {
                         return queryPostgres(catalogAndSchema, table);
-                    }else if (database instanceof XuguDatabase) {
+                    }else if (database instanceof XuguDatabase || database instanceof CAEDatabase) {
                         return queryXuGu(catalogAndSchema, table);
                     }
 
@@ -1142,7 +1142,7 @@ public class JdbcDatabaseSnapshot extends DatabaseSnapshot {
                 private List<CachedRow> queryXuGu(CatalogAndSchema catalogAndSchema, String tableName) throws  SQLException {
                     StringBuilder sql = new StringBuilder();
                     sql.append("SELECT \n")
-                            .append("  '").append(catalogAndSchema.getCatalogName().toUpperCase()).append("' AS TABLE_CAT, \n")
+                            .append("  '").append(catalogAndSchema.getCatalogName()).append("' AS TABLE_CAT, \n")
                             .append("  s.schema_name AS TABLE_SCHEM, \n")
                             .append("  t.table_name AS TABLE_NAME, \n")
                             .append("  'TABLE' AS TABLE_TYPE, \n")
@@ -1157,8 +1157,8 @@ public class JdbcDatabaseSnapshot extends DatabaseSnapshot {
                             .append("  all_schemas s \n")
                             .append("WHERE \n")
                             .append("  t.schema_id = s.schema_id \n")
-                            .append("  AND t.table_name = '").append(tableName.toUpperCase()).append("' \n")
-                            .append("  AND s.schema_name IN('").append(catalogAndSchema.getSchemaName().toUpperCase()).append("')" +
+                            .append("  AND t.table_name = '").append(tableName).append("' \n")
+                            .append("  AND s.schema_name IN('").append(catalogAndSchema.getSchemaName()).append("')" +
                                     " " +
                                     "\n")
                             .append("  AND t.temp_type = 0 \n")
@@ -1690,6 +1690,18 @@ public class JdbcDatabaseSnapshot extends DatabaseSnapshot {
                                 "and sysconstraint.constraint_type = 'U'";
                         if (tableName != null) {
                             sql += " and systable.table_name = '" + tableName + "'";
+                        }
+                    } else if ((database instanceof XuguDatabase) || (database instanceof CAEDatabase)) {
+                        sql = "SELECT c.cons_name as CONSTRAINT_NAME, c.cons_type as CONSTRAINT_TYPE, t.table_name " +
+                                "FROM user_constraints c " +
+                                "LEFT JOIN all_tables  t ON c.table_id = t.table_id " +
+                                "LEFT JOIN user_databases d ON c.db_id = d.db_id " +
+                                "LEFT JOIN user_schemas s ON t.schema_id = s.schema_id " +
+                                "WHERE s.schema_name = '" + jdbcSchemaName + "' " +
+                                "AND d.db_name = '" + jdbcCatalogName + "' " +
+                                "AND c.cons_type = 'U'";
+                        if (tableName != null) {
+                            sql += " and t.table_name='" + tableName + "'";
                         }
                     } else {
                         if (database instanceof H2Database) {
