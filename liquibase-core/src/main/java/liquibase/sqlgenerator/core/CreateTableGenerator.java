@@ -3,6 +3,7 @@ package liquibase.sqlgenerator.core;
 import liquibase.Scope;
 import liquibase.database.Database;
 import liquibase.database.core.AbstractDb2Database;
+import liquibase.database.core.CAEDatabase;
 import liquibase.database.core.Db2zDatabase;
 import liquibase.database.core.InformixDatabase;
 import liquibase.database.core.MSSQLDatabase;
@@ -12,6 +13,7 @@ import liquibase.database.core.PostgresDatabase;
 import liquibase.database.core.SQLiteDatabase;
 import liquibase.database.core.SybaseASADatabase;
 import liquibase.database.core.SybaseDatabase;
+import liquibase.database.core.XuguDatabase;
 import liquibase.datatype.DatabaseDataType;
 import liquibase.exception.DatabaseException;
 import liquibase.exception.ValidationErrors;
@@ -226,6 +228,11 @@ public class CreateTableGenerator extends AbstractSqlGenerator<CreateTableStatem
                 buffer.append(" COMMENT '" + database.escapeStringForDatabase(statement.getColumnRemarks(column)) + "'");
             }
 
+            if (((database instanceof XuguDatabase) || (database instanceof CAEDatabase)) && (statement.getColumnRemarks(column) != null)) {
+                buffer.append(" COMMENT '")
+                        .append(database.escapeStringForDatabase(statement.getColumnRemarks(column)))
+                        .append("'");
+            }
             if (columnIterator.hasNext()) {
                 buffer.append(", ");
             }
@@ -389,6 +396,9 @@ public class CreateTableGenerator extends AbstractSqlGenerator<CreateTableStatem
             }
         }
 
+        if (((database instanceof XuguDatabase) || (database instanceof CAEDatabase)) && (statement.getRemarks() != null)) {
+            sql += " COMMENT '" + database.escapeStringForDatabase(statement.getRemarks()) + "' ";
+        }
         if ((database instanceof MySQLDatabase) && (statement.getRemarks() != null)) {
             sql += " COMMENT='" + database.escapeStringForDatabase(statement.getRemarks()) + "' ";
         }

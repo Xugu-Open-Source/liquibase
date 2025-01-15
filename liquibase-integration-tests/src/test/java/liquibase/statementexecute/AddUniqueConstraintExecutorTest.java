@@ -161,6 +161,7 @@ public class AddUniqueConstraintExecutorTest extends AbstractExecuteTest {
         assertCorrect("alter table [lbschem2].[adduqtest] add constraint [uq_test] unique ([coltomakeuq])", H2Database.class);
         assertCorrect("alter table [lbschem2].[adduqtest] add constraint [uq_test] unique ([coltomakeuq])", Ingres9Database.class);
         assertCorrect("alter table [lbschem2].[adduqtest] add constraint [uq_test] unique ([coltomakeuq])", SnowflakeDatabase.class);
+        assertCorrect("alter table [lbschem2].[adduqtest] add constraint [uq_test] unique ([coltomakeuq])", XuguDatabase.class, CAEDatabase.class);
         assertCorrectOnRest("alter table [lbcat2].[adduqtest] add constraint [uq_test] unique ([coltomakeuq])");
 
     }
