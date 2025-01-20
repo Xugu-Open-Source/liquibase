@@ -76,6 +76,8 @@ liquibase.sqlgenerator.core.InsertOrUpdateGeneratorOracle
 liquibase.sqlgenerator.core.InsertOrUpdateGeneratorPostgres
 liquibase.sqlgenerator.core.InsertOrUpdateGeneratorSQLite
 liquibase.sqlgenerator.core.InsertOrUpdateGeneratorSybaseASA
+liquibase.sqlgenerator.core.InsertOrUpdateGeneratorCAE
+liquibase.sqlgenerator.core.InsertOrUpdateGeneratorXuGu
 liquibase.sqlgenerator.core.InsertSetGenerator
 liquibase.sqlgenerator.core.LockDatabaseChangeLogGenerator
 liquibase.sqlgenerator.core.MarkChangeSetRanGenerator

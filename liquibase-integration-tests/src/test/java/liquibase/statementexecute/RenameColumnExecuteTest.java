@@ -52,6 +52,8 @@ public class RenameColumnExecuteTest extends AbstractExecuteTest {
         assertCorrect("exec sp_rename '[table_name].[column_name]', 'new_name', 'COLUMN'", MSSQLDatabase.class);
         assertCorrect("exec sp_rename 'table_name.column_name', 'new_name'", SybaseDatabase.class);
         assertCorrect("alter table [table_name] rename column_name to new_name",SybaseASADatabase.class);
+        assertCorrect("alter table [table_name] rename column [column_name] to [new_name] cascade",CAEDatabase.class);
+        assertCorrect("alter table [table_name] rename column [column_name] to [new_name] cascade",XuguDatabase.class);
         assertCorrectOnRest("alter table [table_name] rename column [column_name] to [new_name]");
     }
 }

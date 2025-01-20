@@ -96,7 +96,7 @@ public class ModifyDataTypeGenerator extends AbstractSqlGenerator<ModifyDataType
         } else if ((database instanceof SybaseASADatabase) || (database instanceof SybaseDatabase) || (database
             instanceof MSSQLDatabase) || (database instanceof MySQLDatabase) || (database instanceof HsqlDatabase) ||
             (database instanceof H2Database) || (database instanceof OracleDatabase) || (database instanceof
-            InformixDatabase)) {
+            InformixDatabase) || (database instanceof XuguDatabase) || (database instanceof CAEDatabase)) {
             return " ";
         } else {
             return " TYPE ";
