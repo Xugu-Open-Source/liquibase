@@ -44,7 +44,7 @@ jobs:
       - name: Download release assets
         uses: robinraju/release-downloader@v1.3
         with:
-          repository: "liquibase/liquibase"
+          repository: "Xugu-Open-Source/liquibase"
           tag: "${{ needs.setup.outputs.tag }}"
           filename: "*"
           out-file-path: "."
