@@ -45,7 +45,7 @@ jobs:
       - name: Download release assets
         uses: robinraju/release-downloader@v1.7
         with:
-          repository: "liquibase/liquibase"
+          repository: "Xugu-Open-Source/liquibase"
           tag: "${{ needs.setup.outputs.tag }}"
           filename: "*"
           out-file-path: "."
@@ -178,7 +178,7 @@ jobs:
     - name: Download release javadocs
       uses: robinraju/release-downloader@v1.7
       with:
-        repository: "liquibase/liquibase"
+        repository: "Xugu-Open-Source/liquibase"
         tag: "${{ needs.setup.outputs.tag }}"
         filename: "liquibase-additional*.zip"
         out-file-path: "."
@@ -242,7 +242,7 @@ jobs:
         with:
           # Relative path under $GITHUB_WORKSPACE to place the repository
           path: liquibase-core  
-          repository: "liquibase/liquibase"
+          repository: "Xugu-Open-Source/liquibase"
     
       - name: Download liquibase-pro xsd
         uses: actions/checkout@v3
